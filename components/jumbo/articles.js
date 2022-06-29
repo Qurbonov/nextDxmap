@@ -4,10 +4,8 @@ export default function Articles() {
   return (
     <section className="jumbotron text-center">
       <div className="container">
-        <h1>Experience Unique Articles</h1>
-        <p className="lead text-muted">
-          Learn and Share
-        </p>
+        <h1>Davlat xaridlari markaziy axborot portali</h1>
+
       </div>
     </section>
   )

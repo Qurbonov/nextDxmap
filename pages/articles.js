@@ -5,7 +5,7 @@ import ArticlesJumbo from '../components/jumbo/articles'
 export default function Articles(initialData) {
   return (
     <SimpleLayout preContainer={<ArticlesJumbo />}>
-      <div className="row">
+      {/* <div className="row">
         <div className="col-md-4">
           <div className="card mb-4 shadow-sm">
             <Link href={`/#`}><a>
@@ -28,7 +28,7 @@ export default function Articles(initialData) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </SimpleLayout>
   )
 }
