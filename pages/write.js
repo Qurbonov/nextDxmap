@@ -1,5 +1,5 @@
 import SimpleLayout from '../components/layout/simple'
-import DataTablesTest from '../components/DataTablesTest'
+import DataTablesTest from '../components/DataTable/DataTablesTest'
 
 export default function Write() {
   return (

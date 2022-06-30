@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import styles from './DataTable.module.css';
+import Link from 'next/link';
 
 const DataTablesTest = () => {
+  const router = useRouter();
+  const { id } = router.query;
   const [rabbitData, setRbtData] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const getAllTenders = async () => {
+    console.log('getAllTenders');
     try {
       const response = await axios.get(
-        // 'http://localhost:8585/v1/atm/getAllTenders'
+        'http://localhost:8585/v1/atm/getAllTenders'
       );
       setRbtData(response.data);
     } catch (error) {
@@ -18,20 +22,45 @@ const DataTablesTest = () => {
     }
   };
   const getAuctions = async () => {
+    console.log('getAuctions');
     try {
       const response = await axios.get(
-        // 'http://localhost:8585/v1/atm/getAuctions'
+        'http://localhost:8585/v1/atm/getAuctions'
       );
       setRbtData(response.data);
     } catch (error) {
       error;
     }
   };
-
+  const getAllKonkurs = async () => {
+    console.log('getAllKonkurs');
+    try {
+      const response = await axios.get(
+        'http://localhost:8585/v1/atm/getAllKonkurs'
+      );
+      setRbtData(response.data);
+    } catch (error) {
+      error;
+    }
+  };
+  const getEMagazins = async () => {
+    console.log('getEMagazins');
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        'http://localhost:8585/v1/atm/getEMagazins'
+      );
+      setRbtData(response.data);
+      setLoading(false);
+    } catch (error) {
+      error;
+    }
+  };
+  // const ExpanableComponent = ({ row }) => response.data;
   const columns = [
     {
-      name: 'Etkazib beruvchi',
-      selector: (row) => row.vendor_name,
+      name: 'Tashkilot nomi',
+      selector: (row) => row.organ_name,
       sortable: true,
       reorder: true,
       width: '25%',
@@ -49,22 +78,51 @@ const DataTablesTest = () => {
     {
       name: 'Lot raqami',
       selector: (row) => (
-        <a href={row.lot_id} target='_blank' rel='noopener noreferrer'>
-          {row.lot_id}
-        </a>
+        // <a href={row.id} target='_blank' rel='noopener noreferrer'>
+        //   {row.lot_id}
+        // </a>
+        <div>
+          <Link
+            href='/components/DataTable/detailsInfo/[complateData].js'
+            as={`${row.id}`}
+          >
+            <a>{row.lot_id}</a>
+          </Link>
+          {/* <Link as={row.id} href='/components/DataTable/[complateData].js'>
+            <a>{row.lot_id}</a>
+          </Link> */}
+        </div>
       ),
       sortable: true,
       reorder: true,
     },
     {
       name: 'Tashkilot turi',
-      selector: (row) => (row.maloy == 'Y' ? 'kichik bizness' : 'biznes'),
+      selector: (row) => (row.maloy == 'Y' ? 'Kichik bizness' : 'Tashkilot'),
       sortable: true,
       reorder: true,
     },
     {
       name: 'Summasi',
       selector: (row) => row.summa,
+      sortable: true,
+      reorder: true,
+    },
+    {
+      name: 'Lot summasi',
+      selector: (row) => row.sum_lot,
+      sortable: true,
+      reorder: true,
+    },
+    {
+      name: 'Oy (blok summa)',
+      selector: (row) => row.month,
+      sortable: true,
+      reorder: true,
+    },
+    {
+      name: 'Sana',
+      selector: (row) => row.doc_date,
       sortable: true,
       reorder: true,
     },
@@ -94,6 +152,23 @@ const DataTablesTest = () => {
       headerStyle: (selector, id) => {
         return { textAlign: 'center' };
       },
+    },
+    {
+      name: 'ETP',
+      selector: (row) => {
+        switch (row.etp_id) {
+          case 1:
+            return 'UZEX';
+          case 2:
+            return 'XT-Xarid';
+          case 3:
+            return 'Coopiration';
+          case 4:
+            return 'Shaffof qurilish';
+        }
+      },
+      sortable: true,
+      reorder: true,
     },
     /*
 
@@ -126,31 +201,29 @@ const DataTablesTest = () => {
     "lot_id": 22110006114878,
     "organ_name": null,
     "proc_id": 1
+    Shaffof qurilish	Tender	22411006013121		201512962	Гиждувон бунёдкор ИТКТ	301706646	167093100000	2022-06-23
   },
 
 */
-
-
   ];
 
   useEffect(() => {
     getAllTenders();
   }, []);
 
-
   return (
     <div className='w-100 min-vh-100'>
       <div className='pb-4 border-bottom  border-light'>
-        <button className='btn btn-primary m-2' onClick={getAllTenders}>
+        <button className='btn btn-link m-2' onClick={getAllTenders}>
           Тендер
         </button>
-        <button className='btn btn-primary m-2' onClick={getAuctions}>
+        <button className='btn btn-link m-2' onClick={getAuctions}>
           Аукцион
         </button>
-        <button className='btn btn-primary m-2' onClick={getAuctions}>
+        <button className='btn btn-link m-2' onClick={getEMagazins}>
           Электронный магазин
         </button>
-        <button className='btn btn-primary m-2' onClick={getAuctions}>
+        <button className='btn btn-link m-2' onClick={getAllKonkurs}>
           Конкурс
         </button>
       </div>
@@ -164,10 +237,12 @@ const DataTablesTest = () => {
           responsive
           fixedHeader
           striped
-          pointerOnHover
-          expandableRows
-          expandOnRowClicked
-        // expandableRowsComponent={<ExpandedComponent />}
+          // pointerOnHover
+
+          progressPending={loading}
+          // expandableRows
+          // expandOnRowClicked
+          // expandableRowsComponent={<ExpandedComponent />}
         />
       </div>
     </div>
