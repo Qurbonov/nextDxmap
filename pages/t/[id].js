@@ -10,7 +10,7 @@ export default function complateData() {
   useEffect(() => {
     if (id) {
       setLoading(true);
-      fetch(`http://localhost:8585/v1/atm/getResultatById/${id}`)
+      fetch(`http://192.168.254.145:8585/v1/atm/getResultatById/${id}`)
         .then((res) => res.json())
         .then((data) => {
           setLotInfo(data);
@@ -34,7 +34,7 @@ export default function complateData() {
           </div>
           <div class='col-2 text-right'>
             {' '}
-            <a href='http://localhost:3000/contrat'>Ro`yhat</a>
+            <a href='http://192.168.254.145:3000/contrat'>Ro`yhat</a>
           </div>
         </div>
 

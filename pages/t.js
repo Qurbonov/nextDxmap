@@ -12,7 +12,7 @@ export default function complateData() {
   const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:8585/v1/atm/getResultatById/' + n)
+    fetch('http://192.168.254.145:8585/v1/atm/getResultatById/' + n)
       .then((res) => res.json())
       .then((data) => {
         setLotInfo(data);

@@ -14,7 +14,7 @@ const DataTablesTest = () => {
     console.log('getAllTenders');
     try {
       const response = await axios.get(
-        'http://localhost:8585/v1/atm/getAllTenders'
+        'http://192.168.254.145:8585/v1/atm/getAllTenders'
       );
       setRbtData(response.data);
     } catch (error) {
@@ -25,7 +25,7 @@ const DataTablesTest = () => {
     console.log('getAuctions');
     try {
       const response = await axios.get(
-        'http://localhost:8585/v1/atm/getAuctions'
+        'http://192.168.254.145:8585/v1/atm/getAuctions'
       );
       setRbtData(response.data);
     } catch (error) {
@@ -36,7 +36,7 @@ const DataTablesTest = () => {
     console.log('getAllKonkurs');
     try {
       const response = await axios.get(
-        'http://localhost:8585/v1/atm/getAllKonkurs'
+        'http://192.168.254.145:8585/v1/atm/getAllKonkurs'
       );
       setRbtData(response.data);
     } catch (error) {
@@ -48,7 +48,7 @@ const DataTablesTest = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        'http://localhost:8585/v1/atm/getEMagazins'
+        'http://192.168.254.145:8585/v1/atm/getEMagazins'
       );
       setRbtData(response.data);
       setLoading(false);
