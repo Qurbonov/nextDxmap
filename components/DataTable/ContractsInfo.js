@@ -12,7 +12,13 @@ const ContractsInfo = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        'http://localhost:8585/v1/atm/getResultats'
+        'http://localhost:8585/v1/atm/getResultats',
+        {
+          params: {
+            limit: 100,
+            offset: 1,
+          },
+        }
       );
       setRbtData(response.data);
       setLoading(false);
@@ -21,7 +27,7 @@ const ContractsInfo = () => {
     }
   };
 
-  const columns = [
+  const columns = React.useMemo(() => [
     {
       name: 'ETP',
       selector: (row) => {
@@ -60,15 +66,35 @@ const ContractsInfo = () => {
       width: '7%',
     },
     {
-      name: 'Lot raqami',
+      name: 'Lot raqami1',
       selector: (row) => (
         <div>
+          {/* <Link href='/[id]' as={`/${row.id}`}>
+            <a>{row.lot_id}</a>
+          </Link> */}
           <Link
-            href='/components/DataTable/detailsInfo/[complateData].js'
-            as={`${row.id}`}
+            href={{
+              pathname: '/t/' + `${row.id}`,
+              params: { id: `${row.id}` },
+            }}
+            as={`/t/${row.id}`}
           >
             <a>{row.lot_id}</a>
           </Link>
+          {/* <Link href={{ pathname: '/t', query: { id: [row.id] } }}>
+            <a>{row.lot_id}</a>
+          </Link> */}
+          {/* <Link
+            href='/components/DataTable/detailsInfo/[complateData].js'
+            as={`${row.id}`}
+            // as={{
+            //   pathname: '/',
+            //   // pathname: '/'+[row.id],
+            //   query: { id:row.id },
+            // }}
+          >
+            <a>{row.lot_id}</a>
+          </Link> */}
           {/* <Link as={row.id} href='/components/DataTable/[complateData].js'>
             <a>{row.lot_id}</a>
           </Link> */}
@@ -170,7 +196,7 @@ const ContractsInfo = () => {
       sortable: true,
       reorder: true,
     },
-  ];
+  ]);
 
   useEffect(() => {
     getResultats();

@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table';
+import {
+  useTable,
+  usePagination,
+  useFilters,
+  useGlobalFilter,
+  useAsyncDebounce,
+} from 'react-table';
 import styled from 'styled-components';
 // import './styles.css';
 import BTable from 'react-bootstrap/Table';
-import matchSorter from 'match-sorter'
+import matchSorter from 'match-sorter';
 import axios from 'axios';
 
 // Define a default UI for filtering
@@ -12,18 +18,18 @@ function GlobalFilter({
   globalFilter,
   setGlobalFilter,
 }) {
-  const count = preGlobalFilteredRows.length
-  const [value, setValue] = React.useState(globalFilter)
-  const onChange = useAsyncDebounce(value => {
-    setGlobalFilter(value || undefined)
-  }, 200)
+  const count = preGlobalFilteredRows.length;
+  const [value, setValue] = React.useState(globalFilter);
+  const onChange = useAsyncDebounce((value) => {
+    setGlobalFilter(value || undefined);
+  }, 200);
 
   return (
     <span>
       Search:{' '}
       <input
-        value={value || ""}
-        onChange={e => {
+        value={value || ''}
+        onChange={(e) => {
           setValue(e.target.value);
           onChange(e.target.value);
         }}
@@ -34,24 +40,24 @@ function GlobalFilter({
         }}
       />
     </span>
-  )
+  );
 }
 
 // Define a default UI for filtering
 function DefaultColumnFilter({
   column: { filterValue, preFilteredRows, setFilter },
 }) {
-  const count = preFilteredRows.length
+  const count = preFilteredRows.length;
 
   return (
     <input
       value={filterValue || ''}
-      onChange={e => {
-        setFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
+      onChange={(e) => {
+        setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
       }}
-      placeholder={`Search ${count} records...`}
+      placeholder={`${count} ta yozuv...`}
     />
-  )
+  );
 }
 
 // This is a custom filter UI for selecting
@@ -62,29 +68,29 @@ function SelectColumnFilter({
   // Calculate the options for filtering
   // using the preFilteredRows
   const options = React.useMemo(() => {
-    const options = new Set()
-    preFilteredRows.forEach(row => {
-      options.add(row.values[id])
-    })
-    return [...options.values()]
-  }, [id, preFilteredRows])
+    const options = new Set();
+    preFilteredRows.forEach((row) => {
+      options.add(row.values[id]);
+    });
+    return [...options.values()];
+  }, [id, preFilteredRows]);
 
   // Render a multi-select box
   return (
     <select
       value={filterValue}
-      onChange={e => {
-        setFilter(e.target.value || undefined)
+      onChange={(e) => {
+        setFilter(e.target.value || undefined);
       }}
     >
-      <option value="">All</option>
+      <option value=''>All</option>
       {options.map((option, i) => (
         <option key={i} value={option}>
           {option}
         </option>
       ))}
     </select>
-  )
+  );
 }
 
 // This is a custom filter UI that uses a
@@ -97,29 +103,29 @@ function SliderColumnFilter({
   // using the preFilteredRows
 
   const [min, max] = React.useMemo(() => {
-    let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
-    let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
-    preFilteredRows.forEach(row => {
-      min = Math.min(row.values[id], min)
-      max = Math.max(row.values[id], max)
-    })
-    return [min, max]
-  }, [id, preFilteredRows])
+    let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
+    let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
+    preFilteredRows.forEach((row) => {
+      min = Math.min(row.values[id], min);
+      max = Math.max(row.values[id], max);
+    });
+    return [min, max];
+  }, [id, preFilteredRows]);
 
   return (
     <>
       <input
-        type="range"
+        type='range'
         min={min}
         max={max}
         value={filterValue || min}
-        onChange={e => {
-          setFilter(parseInt(e.target.value, 10))
+        onChange={(e) => {
+          setFilter(parseInt(e.target.value, 10));
         }}
       />
       <button onClick={() => setFilter(undefined)}>Off</button>
     </>
-  )
+  );
 }
 
 // This is a custom UI for our 'between' or number range
@@ -129,14 +135,14 @@ function NumberRangeColumnFilter({
   column: { filterValue = [], preFilteredRows, setFilter, id },
 }) {
   const [min, max] = React.useMemo(() => {
-    let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
-    let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
-    preFilteredRows.forEach(row => {
-      min = Math.min(row.values[id], min)
-      max = Math.max(row.values[id], max)
-    })
-    return [min, max]
-  }, [id, preFilteredRows])
+    let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
+    let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
+    preFilteredRows.forEach((row) => {
+      min = Math.min(row.values[id], min);
+      max = Math.max(row.values[id], max);
+    });
+    return [min, max];
+  }, [id, preFilteredRows]);
 
   return (
     <div
@@ -146,10 +152,13 @@ function NumberRangeColumnFilter({
     >
       <input
         value={filterValue[0] || ''}
-        type="number"
-        onChange={e => {
-          const val = e.target.value
-          setFilter((old = []) => [val ? parseInt(val, 10) : undefined, old[1]])
+        type='number'
+        onChange={(e) => {
+          const val = e.target.value;
+          setFilter((old = []) => [
+            val ? parseInt(val, 10) : undefined,
+            old[1],
+          ]);
         }}
         placeholder={`Min (${min})`}
         style={{
@@ -160,10 +169,13 @@ function NumberRangeColumnFilter({
       to
       <input
         value={filterValue[1] || ''}
-        type="number"
-        onChange={e => {
-          const val = e.target.value
-          setFilter((old = []) => [old[0], val ? parseInt(val, 10) : undefined])
+        type='number'
+        onChange={(e) => {
+          const val = e.target.value;
+          setFilter((old = []) => [
+            old[0],
+            val ? parseInt(val, 10) : undefined,
+          ]);
         }}
         placeholder={`Max (${max})`}
         style={{
@@ -172,15 +184,15 @@ function NumberRangeColumnFilter({
         }}
       />
     </div>
-  )
+  );
 }
 
 function fuzzyTextFilterFn(rows, id, filterValue) {
-  return matchSorter(rows, filterValue, { keys: [row => row.values[id]] })
+  return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
 }
 
 // Let the table remove the filter if the string is empty
-fuzzyTextFilterFn.autoRemove = val => !val
+fuzzyTextFilterFn.autoRemove = (val) => !val;
 
 function SensorTable({ columns, data }) {
   const filterTypes = React.useMemo(
@@ -190,25 +202,25 @@ function SensorTable({ columns, data }) {
       // Or, override the default text filter to use
       // "startWith"
       text: (rows, id, filterValue) => {
-        return rows.filter(row => {
-          const rowValue = row.values[id]
+        return rows.filter((row) => {
+          const rowValue = row.values[id];
           return rowValue !== undefined
             ? String(rowValue)
-              .toLowerCase()
-              .startsWith(String(filterValue).toLowerCase())
-            : true
-        })
+                .toLowerCase()
+                .startsWith(String(filterValue).toLowerCase())
+            : true;
+        });
       },
     }),
     []
-  )
+  );
   const defaultColumn = React.useMemo(
     () => ({
       // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
     }),
     []
-  )
+  );
 
   const {
     getTableProps,
@@ -234,7 +246,7 @@ function SensorTable({ columns, data }) {
     {
       columns,
       data,
-      initialState: { pageIndex: 1 },
+      initialState: { pageIndex: 0 },
       defaultColumn, // Be sure to pass the defaultColumn option
       filterTypes,
     },
@@ -242,21 +254,23 @@ function SensorTable({ columns, data }) {
     useGlobalFilter, // useGlobalFilter!
     usePagination
   );
-  const firstPageRows = rows.slice(0, 10)
+  const firstPageRows = rows.slice(0, 10);
   return (
     <>
-      <BTable striped bordered hover size="sm" {...getTableProps()}>
+      <BTable striped bordered hover size='sm' {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}
-                  <div>{column.canFilter ? column.render('Filter') : null}</div></th>
+                <th {...column.getHeaderProps()}>
+                  {column.render('Header')}
+                  <div>{column.canFilter ? column.render('Filter') : null}</div>
+                </th>
               ))}
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()} className="thead-dark">
+        <tbody {...getTableBodyProps()} className='thead-dark'>
           {page.map((row, i) => {
             prepareRow(row);
             return (
@@ -291,10 +305,11 @@ function SensorTable({ columns, data }) {
           </strong>{' '}
         </span>
         <span>
+          {/* 22110012104673 */}
           | Kegingi:{' '}
           <input
             type='number'
-            defaultValue={pageIndex + 1}
+            defaultValue={pageIndex}
             onChange={(e) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               gotoPage(page);
@@ -321,19 +336,17 @@ function SensorTable({ columns, data }) {
 
 // Define a custom filter filter function!
 function filterGreaterThan(rows, id, filterValue) {
-  return rows.filter(row => {
-    const rowValue = row.values[id]
-    return rowValue >= filterValue
-  })
+  return rows.filter((row) => {
+    const rowValue = row.values[id];
+    return rowValue >= filterValue;
+  });
 }
 
 // This is an autoRemove method on the filter function that
 // when given the new filter value and returns true, the filter
 // will be automatically removed. Normally this is just an undefined
 // check, but here, we want to remove the filter if it's not a number
-filterGreaterThan.autoRemove = val => typeof val !== 'number'
-
-
+filterGreaterThan.autoRemove = (val) => typeof val !== 'number';
 
 //#####################################################################################################################
 function RcDatatable() {
@@ -344,7 +357,7 @@ function RcDatatable() {
     console.log(sensors);
     async function getData() {
       await axios
-        .get('http://localhost:8585/v1/atm/getAuctions')
+        .get('http://localhost:8585/v1/atm/getResultats')
         .then((response) => {
           // check if the data is populated
           console.log(response.data);
@@ -367,9 +380,36 @@ function RcDatatable() {
       },
       {
         Header: 'Elektron savdo maydonchasi',
-        // accessor: 'etp_id',
-        // accessor: a => (a.isA ? "isA" : a.isB ? "isB" : a.isC ? "isC" : "")
-        accessor: a => 'etp_id',
+        accessor: (etp_id) =>
+          (etp_id = '4' ? 'uzex11' : (etp_id = '3' ? 'boshqa' : 'top')),
+        // Cell: (etp_id) =>
+        //   (etp_id = 1 ? 'uzex' : (etp_id = 3 ? 'boshqa' : 'top')),
+        // {
+        //   switch (v) {
+        //       case 1:
+        //         return 'UZEX';
+        //       case 2:
+        //         return 'XT-Xarid';
+        //       case 3:
+        //         return 'Coopiration';
+        //       case 4:
+        //         return 'Shaffof qurilish';
+        //     }},
+        // Cell: (v) => console.log(v.value),
+        // ({ cell }) => {
+        //   switch (row) {
+        //     case 1:
+        //       return 'UZEX';
+        //     case 2:
+        //       return 'XT-Xarid';
+        //     case 3:
+        //       return 'Coopiration';
+        //     case 4:
+        //       return 'Shaffof qurilish';
+        //   }
+        // },
+        // (etp_id = 1 ? 'uzex' : etp_id = 4 ? 'isB':""),
+        // accessor: (a) => 'etp_id',
         // Cell: ({ cell: { value } }) => <PaymentTypes values={value} />
         Filter: SelectColumnFilter,
         filter: 'includes',
@@ -387,12 +427,12 @@ function RcDatatable() {
         Filter: SelectColumnFilter,
         filter: 'includes',
       },
-      {
-        Header: 'Summa',
-        accessor: 'sum_lot',
-        Filter: SliderColumnFilter,
-        filter: 'equals',
-      },
+      // {
+      //   Header: 'Summa',
+      //   accessor: 'sum_lot',
+      //   Filter: SliderColumnFilter,
+      //   filter: 'equals',
+      // },
       {
         Header: 'LOT',
         accessor: 'lot_id',
@@ -435,15 +475,22 @@ function RcDatatable() {
     ],
     []
   );
-
+  // 22111007083108
   if (sensors.length === 0 && !loadingData) {
     return <div>No Senors data available</div>;
   }
 
   return (
     <div>
-      {loadingData && <span className='text-light bg-primary p-1 px-3'>Ma`lumot yuklanmoqda ...</span>}
-      <div className="mt-2"> <SensorTable columns={columns} data={sensors} /></div>
+      {loadingData && (
+        <span className='text-light bg-primary p-1 px-3'>
+          Ma`lumot yuklanmoqda ...
+        </span>
+      )}
+      <div className='mt-2'>
+        {' '}
+        <SensorTable columns={columns} data={sensors} />
+      </div>
     </div>
   );
 }
@@ -451,4 +498,4 @@ function RcDatatable() {
 //   return <SensorContainer />;
 // }
 
-export default RcDatatable
+export default RcDatatable;

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Navbar() {
   return (
-    <Nav className='navbar navbar-expand-lg navbar-light bg-light'>
+    <Nav className='navbar navbar-expand-lg bg-dark'>
       <div className='container-xl'>
         <Link href='/'>
           <a className='navbar-brand'>DXMAP</a>
@@ -35,11 +35,11 @@ export default function Navbar() {
                 <a className='nav-link'>Shartnoma ma'lumotlari</a>
               </Link>
             </li>{' '}
-            <li className='nav-item'>
+            {/* <li className='nav-item'>
               <Link href='/contrat_mTable'>
-                <a className='nav-link'>Shartnoma ma'lumotlari</a>
+                <a className='nav-link'>Ma'lumotlari</a>
               </Link>
-            </li>{' '}
+            </li>{' '} */}
             <li className='nav-item'>
               <Link href='/write'>
                 <a className='nav-link'>Amaldagi savdolar</a>

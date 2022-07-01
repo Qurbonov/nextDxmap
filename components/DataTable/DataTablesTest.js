@@ -78,19 +78,12 @@ const DataTablesTest = () => {
     {
       name: 'Lot raqami',
       selector: (row) => (
-        // <a href={row.id} target='_blank' rel='noopener noreferrer'>
-        //   {row.lot_id}
-        // </a>
+       
         <div>
-          <Link
-            href='/components/DataTable/detailsInfo/[complateData].js'
-            as={`${row.id}`}
-          >
+          <Link href='/components/DataTable/[id]' as='/components/DataTable/id'>
             <a>{row.lot_id}</a>
           </Link>
-          {/* <Link as={row.id} href='/components/DataTable/[complateData].js'>
-            <a>{row.lot_id}</a>
-          </Link> */}
+         
         </div>
       ),
       sortable: true,
