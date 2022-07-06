@@ -11,24 +11,24 @@ export default function Home(initialData) {
       <section className='text-center'>
         <h1>Savdolar</h1>
 
-        <div class='container px-4'>
-          <div class='row gx-5'>
-            <div class='col'>
-              <div class='p-3 border bg-light'>
+        <div className='container px-4'>
+          <div className='row gx-5'>
+            <div className='col'>
+              <div className='p-3 border bg-light'>
                 {' '}
                 <Donut />
               </div>
             </div>
-            <div class='col'>
-              <div class='p-3 border bg-light'>
+            <div className='col'>
+              <div className='p-3 border bg-light'>
                 {' '}
                 <Bar />
               </div>
             </div>
           </div>
-          <div class='row gx-5'>
-            <div class='col'>
-              <div class='p-3 border bg-light'>
+          <div className='row gx-5'>
+            <div className='col'>
+              <div className='p-3 border bg-light'>
                 {' '}
                 <Line />
               </div>

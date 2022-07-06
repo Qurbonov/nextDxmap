@@ -10,7 +10,7 @@ export default function complateData() {
   useEffect(() => {
     if (id) {
       setLoading(true);
-      fetch(`http://192.168.254.145:8585/v1/atm/getResultatById/${id}`)
+      fetch(`http://192.168.7.54:80/v1/atm/getResultatById/${id}`)
         .then((res) => res.json())
         .then((data) => {
           setLotInfo(data);
@@ -27,42 +27,42 @@ export default function complateData() {
     <>
       <Navbar />
       <div className='container mt-4'>
-        <div class='row '>
-          <div class='col-10'>
+        <div className='row '>
+          <div className='col-10'>
             {' '}
             <h5>LOT ID: {data?.resultat?.PAYLOAD.LOTID} ma'lumotlari. </h5>{' '}
           </div>
-          <div class='col-2 text-right'>
+          <div className='col-2 text-right'>
             {' '}
-            <a href='http://192.168.254.145:3000/contrat'>Ro`yhat</a>
+            <a href='http://192.168.7.54:3000/contrat'>Ro`yhat</a>
           </div>
         </div>
 
-        <ul class='list-group'>
-          <li class='list-group-item'>
+        <ul className='list-group'>
+          <li className='list-group-item'>
             <b>lot raqami:</b> {data?.resultat?.PAYLOAD.LOTID}
           </li>
-          <li class='list-group-item'>
+          <li className='list-group-item'>
             <b>shartnoma raqami:</b> {data?.resultat?.PAYLOAD.CONTRACTNUM}
           </li>
-          <li class='list-group-item'>
+          <li className='list-group-item'>
             <b>sharnoma imzolagan sanasi:</b>{' '}
             {data?.resultat?.PAYLOAD.CONTRACTDAT}
           </li>
-          <li class='list-group-item'>
+          <li className='list-group-item'>
             <b>etkazib beruvchi:</b> {data?.resultat?.PAYLOAD.VENDORNAME}
           </li>
-          <li class='list-group-item'>
+          <li className='list-group-item'>
             <b>summasi:</b> {data?.resultat?.PAYLOAD.SUMMA}
           </li>
-          <li class='list-group-item'>
+          <li className='list-group-item'>
             <b>xizmat (tovar) nomi: </b>{' '}
             {data?.resultat?.PAYLOAD.SPECIFICATIONS[0].TOVARNAME}
           </li>{' '}
-          <li class='list-group-item'>
+          <li className='list-group-item'>
             <b>izoh:</b> {data?.resultat?.PAYLOAD.PURPOSE}
           </li>
-          <li class='list-group-item'>
+          <li className='list-group-item'>
             <b>Tashkiot:</b> {data?.resultat?.PAYLOAD.organ_name}
           </li>
         </ul>
