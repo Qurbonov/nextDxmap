@@ -11,7 +11,7 @@ export default function complateData() {
   const [isLoading, setLoading] = useState(false);
   // useEffect(() => {
   //   setLoading(true);
-  //   fetch('http://192.168.254.145:80/v1/atm/getResultatById/269')
+  //   fetch('http://192.168.254.145:8585/v1/atm/getResultatById/269')
   //     .then((res) => res.json())
   //     .then((data) => {
   //       setLotInfo(data);

@@ -12,7 +12,7 @@ const Mtable = () => {
   //     setLoading(true);
   //     try {
   //       const response = await axios.get(
-  //         'http://192.168.254.145:80/v1/atm/getResultats'
+  //         'http://192.168.254.145:8585/v1/atm/getResultats'
   //       );
   //       setRbtData(response.data);
   //       setLoading(false);
@@ -109,7 +109,7 @@ const Mtable = () => {
         // data={rabbitData}
         data={(query) =>
           new Promise((resolve, reject) => {
-            let url = 'http://192.168.254.145:80/v1/atm/getResultats';
+            let url = 'http://192.168.254.145:8585/v1/atm/getResultats';
             fetch(url)
               .then((response) => response.json())
               .then((result) => {

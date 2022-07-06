@@ -12,8 +12,8 @@ const ContractsInfo = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        // 'http://192.168.254.145:80/v1/atm/getResultats',
-        'http://192.168.7.54:80/v1/atm/getResultats',
+        // 'http://192.168.254.145:8585/v1/atm/getResultats',
+        'http://192.168.7.54:8585/v1/atm/getResultats',
         {
           params: {
             limit: 100,

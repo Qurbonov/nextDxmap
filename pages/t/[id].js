@@ -10,7 +10,7 @@ export default function complateData() {
   useEffect(() => {
     if (id) {
       setLoading(true);
-      fetch(`http://192.168.7.54:80/v1/atm/getResultatById/${id}`)
+      fetch(`http://192.168.7.54:8585/v1/atm/getResultatById/${id}`)
         .then((res) => res.json())
         .then((data) => {
           setLotInfo(data);

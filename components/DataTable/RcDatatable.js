@@ -356,7 +356,7 @@ function RcDatatable() {
     console.log(sensors);
     async function getData() {
       await axios
-        .get('http://192.168.7.54:80/v1/atm/getResultats')
+        .get('http://192.168.7.54:8585/v1/atm/getResultats')
         .then((response) => {
           // check if the data is populated
           console.log(response.data);
