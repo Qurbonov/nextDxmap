@@ -9,7 +9,7 @@ export default function Home(initialData) {
   return (
     <SimpleLayout>
       <section className='text-center'>
-        <h1>Savdolar</h1>
+        <h1>SavdolaR</h1>
 
         <div className='container px-4'>
           <div className='row gx-5'>

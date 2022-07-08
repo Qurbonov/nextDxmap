@@ -31,7 +31,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li className='nav-item'>
-              <Link href='/contrat'>
+              <Link href='/contrats'>
                 <a className='nav-link'>Shartnoma ma'lumotlari</a>
               </Link>
             </li>{' '}
@@ -41,12 +41,12 @@ export default function Navbar() {
               </Link>
             </li>{' '} */}
             <li className='nav-item'>
-              <Link href='/write'>
+              <Link href='/trades'>
                 <a className='nav-link'>Amaldagi savdolar</a>
               </Link>
             </li>
             <li className='nav-item'>
-              <Link href='/articles'>
+              <Link href='/about'>
                 <a className='nav-link'>Tizim haqida</a>
               </Link>
             </li>
