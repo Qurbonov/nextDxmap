@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Navbar from '/components/navbar/navbar';
+
 export default function complateData() {
   const router = useRouter();
   const { id } = router.query;
@@ -34,7 +35,7 @@ export default function complateData() {
           </div>
           <div className='col-2 text-right'>
             {' '}
-            <a href='http://192.168.7.54:3000/contrat'>Ro`yhat</a>
+            <a href='http://localhost:3085/contrats'>Ro`yhat</a>
           </div>
         </div>
 

@@ -6,7 +6,6 @@ import axios from 'axios';
 // const MaterialTable = dynamic(() => import('material-table'), { ssr: false });
 
 const Mtable = () => {
-    
   //   const [loading, setLoading] = useState(false);
   //   const getResultats = async () => {
   //     setLoading(true);

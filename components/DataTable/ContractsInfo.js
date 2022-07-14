@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
-import styles from './DataTable.module.css';
+// import styles from './DataTable.module.css';
 import Link from 'next/link';
+
+import FiltrData from '../filtrs/FiltrData';
 
 const ContractsInfo = () => {
   const [rabbitData, setRbtData] = useState([]);
@@ -27,10 +29,23 @@ const ContractsInfo = () => {
       error;
     }
   };
-
+  const onChange = async (e) => {
+    var searchData = rabbitData.filter((item) => {
+      if (
+        item.vendor_name
+          .toString()
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase())
+      ) {
+        return item;
+      }
+    });
+    setRbtData(searchData);
+  };
   const columns = React.useMemo(() => [
     {
       name: 'ETP',
+
       selector: (row) => {
         switch (row.etp_id) {
           case 1:
@@ -70,9 +85,6 @@ const ContractsInfo = () => {
       name: 'Lot raqami1',
       selector: (row) => (
         <div>
-          {/* <Link href='/[id]' as={`/${row.id}`}>
-            <a>{row.lot_id}</a>
-          </Link> */}
           <Link
             href={{
               pathname: '/t/' + `${row.id}`,
@@ -82,23 +94,6 @@ const ContractsInfo = () => {
           >
             <a>{row.lot_id}</a>
           </Link>
-          {/* <Link href={{ pathname: '/t', query: { id: [row.id] } }}>
-            <a>{row.lot_id}</a>
-          </Link> */}
-          {/* <Link
-            href='/components/DataTable/detailsInfo/[complateData].js'
-            as={`${row.id}`}
-            // as={{
-            //   pathname: '/',
-            //   // pathname: '/'+[row.id],
-            //   query: { id:row.id },
-            // }}
-          >
-            <a>{row.lot_id}</a>
-          </Link> */}
-          {/* <Link as={row.id} href='/components/DataTable/[complateData].js'>
-            <a>{row.lot_id}</a>
-          </Link> */}
         </div>
       ),
       sortable: true,
@@ -107,6 +102,7 @@ const ContractsInfo = () => {
     },
     {
       name: 'Tashkilot nomi (xaridor)',
+
       selector: (row) => row.organ_name,
       sortable: true,
       reorder: true,
@@ -122,6 +118,12 @@ const ContractsInfo = () => {
 
     {
       name: 'Etkazib beruvchi tashkilot',
+      // name: (
+      // <div>
+      //   Etkazib beruvchi tashkilot
+      //   <input type='text' onChange={onChange} style={{ width: '80%' }} />
+      // </div>
+      // ),
       selector: (row) => row.vendor_name,
       sortable: true,
       reorder: true,
@@ -204,21 +206,30 @@ const ContractsInfo = () => {
   }, []);
 
   return (
-    <div className='w-100 min-vh-100'>
-      <div className='shadow rounded-0'>
-        <DataTable
-          title='Sharnoma ma`lumotlari'
-          columns={columns}
-          data={rabbitData}
-          pagination
-          dense
-          responsive
-          highlightOnHover
-          striped
-          progressPending={loading}
-        />
+    <>
+      {' '}
+      {/* Filtr: <FiltrData />
+       */}
+      <div className='py-4'>
+        Etkazib beruvchi tashkilot:
+        <input type='text' onChange={onChange} className='form form-control' />
       </div>
-    </div>
+      <div className='w-100 min-vh-100'>
+        <div className='shadow rounded-0'>
+          <DataTable
+            title='Sharnoma ma`lumotlari'
+            columns={columns}
+            data={rabbitData}
+            pagination
+            dense
+            responsive
+            highlightOnHover
+            striped
+            progressPending={loading}
+          />
+        </div>
+      </div>
+    </>
   );
 };
 

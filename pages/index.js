@@ -1,5 +1,3 @@
-import Head from 'next/head';
-
 import SimpleLayout from '../components/layout/simple';
 import Donut from '../components/charts/Donut';
 import Bar from '../components/charts/Bar';
@@ -9,7 +7,7 @@ export default function Home(initialData) {
   return (
     <SimpleLayout>
       <section className='text-center'>
-        <h1>SavdolaR</h1>
+        <h1>Savdolar</h1>
 
         <div className='container px-4'>
           <div className='row gx-5'>
